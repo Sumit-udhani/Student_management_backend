@@ -1,0 +1,32 @@
+{
+  "name": "student_management_backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js",
+    "start-server": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sumit-udhani/Student_management_backend.git"
+  },
+  "author": "Sumit udhani",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sumit-udhani/Student_management_backend/issues"
+  },
+  "homepage": "https://github.com/Sumit-udhani/Student_management_backend#readme",
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  },
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.1.0",
+    "express": "^5.1.0",
+    "mysql2": "^3.14.1",
+    "sequelize": "^6.37.7"
+  }
+}
