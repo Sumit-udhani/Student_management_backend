@@ -9,7 +9,7 @@ router.use(isAuth)
 router.post('/create',validator.studentValidator,validationHandler,studentController.createStudent)
 // Route to get all students
 router.get('/all',studentController.getAllStudents)
-
+router.put('/update',studentController.updateStudents)
 // Route to delete a student by ID
 router.delete('/delete/:id',studentController.deleteStudents)                                                                                    
 module.exports = router

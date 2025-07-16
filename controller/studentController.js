@@ -1,4 +1,5 @@
 const {Student} = require('../models')
+const {Op} = require('sequelize')
 exports.createStudent = async(req,res)=>{
     const {name,parentNo,std,address,admissionDate} = req.body;
     try {
@@ -20,8 +21,14 @@ exports.createStudent = async(req,res)=>{
 }
 exports.getAllStudents = async(req,res)=>{
     try {
+          const searchTerm = req.query.search || "";
         const students = await Student.findAll({
-            order: [['admissionDate', 'DESC']]
+            // order: [['admissionDate', 'DESC']]
+            where:{
+                name:{
+                    [Op.like]:`%${searchTerm}%`
+                }
+            }
         })
         return res.status(200).json({
             message:"Students fetched successfully"
@@ -29,6 +36,30 @@ exports.getAllStudents = async(req,res)=>{
         })
     } catch (error) {
         return res.status(500).json({error:error})
+    }
+}
+exports.updateStudents = async(req,res)=>{
+    try {
+        const {name,parentNo,std,address,admissionDate} = req.body;
+        const student = await Student.findByPk(req.params.id)
+        if (!student) {
+            return res.status(404).json({message:"Student not found"})
+        }
+        await student.update({
+            name,
+            parentNo,
+            std,
+            address,
+            admissionDate
+        })
+        return res.status(200).json({
+            message:"Student updated successfully",
+            student
+        })
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ error: error.message });
     }
 }
 exports.deleteStudents = async(req,res)=>{
