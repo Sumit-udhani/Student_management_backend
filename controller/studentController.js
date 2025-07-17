@@ -22,18 +22,26 @@ exports.createStudent = async(req,res)=>{
 exports.getAllStudents = async(req,res)=>{
     try {
           const searchTerm = req.query.search || "";
-        const students = await Student.findAll({
+          const page = parseInt(req.query.page)||1
+          const limit = 5
+          const offset = (page-1)*limit
+        const {count,rows} = await Student.findAndCountAll({
             // order: [['admissionDate', 'DESC']]
             where:{
                 name:{
                     [Op.like]:`%${searchTerm}%`
                 }
-            }
+            },
+            limit,
+            offset
         })
         return res.status(200).json({
-            message:"Students fetched successfully"
-            ,students
-        })
+            message: "Students fetched successfully",
+            students: rows,
+            totalItems: count,
+            totalPages: Math.ceil(count / limit),
+            currentPage: page
+          });
     } catch (error) {
         return res.status(500).json({error:error})
     }

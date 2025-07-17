@@ -3,6 +3,7 @@ const app = express()
 const bodyParser = require('body-parser')
 const userRouter = require('./routes/authRoutes')
 const studentRouter = require('./routes/studentRoutes')
+const feesRoutes = require('./routes/fessRoutes')
 const cors = require('cors')
 app.use(cors({
     origin: "http://localhost:5173", 
@@ -13,7 +14,7 @@ app.use(cors({
 app.use(bodyParser.json())
 app.use("/auth",userRouter)
 app.use('/student',studentRouter)
-
+app.use('/fees',feesRoutes)
 const {sequelize} = require('./models')
 sequelize.sync({alter:true})
 .then(()=>{
